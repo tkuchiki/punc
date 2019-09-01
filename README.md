@@ -36,6 +36,7 @@ func main() {
 ```console
 # terminal 1
 # default: PUNC_HOST="localhost:58080"
+# disable: DISABLE_PUNC=1
 $ go run main.go
 
 # terminal 2

@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+
+	"github.com/tkuchiki/punc/helper"
 )
 
 type Profiler struct {
@@ -123,6 +125,10 @@ func resetHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ListenAndServe(hosts ...string) error {
+	if helper.IsDisabled() {
+		return fmt.Errorf("punc is disabled")
+	}
+
 	http.HandleFunc("/put_stats", putStatsHandler)
 	http.HandleFunc("/stats", getStatsHandler)
 	http.HandleFunc("/reset", resetHandler)

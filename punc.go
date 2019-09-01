@@ -9,6 +9,8 @@ import (
 	"runtime"
 	"strings"
 	"time"
+
+	"github.com/tkuchiki/punc/helper"
 )
 
 type Client struct {
@@ -50,10 +52,18 @@ func (c *Client) PutStats(stats []byte) error {
 }
 
 func Do() int64 {
+	if helper.IsDisabled() {
+		return 0
+	}
+
 	return time.Now().UnixNano()
 }
 
 func Done(start int64) {
+	if helper.IsDisabled() {
+		return
+	}
+
 	elapsed := sec(time.Now().UnixNano() - start)
 
 	pc := make([]uintptr, 15)
